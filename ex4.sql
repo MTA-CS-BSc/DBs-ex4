@@ -47,7 +47,6 @@ INNER JOIN Customer ON Customer.id = cust_id
 INNER JOIN Product ON Product.id = prod_id
 WHERE lname LIKE 'R%';
 
--- TODO
 -- Q7
 SELECT DISTINCT id, fname, lname
 FROM Customer WHERE id NOT IN (
@@ -116,7 +115,6 @@ SELECT SUM(order_total)
 FROM TotalPerOrder
 WHERE cust_id = 129;
 
--- TODO
 -- Q15.1
 CREATE VIEW EmployeeAge AS
     SELECT emp_id, dept_id, emp_fname, emp_lname, STRFTIME('%F', (DATE('now') - birth_date)) AS emp_age
