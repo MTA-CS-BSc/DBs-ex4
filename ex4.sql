@@ -21,7 +21,6 @@ WHERE ct.id NOT IN (
 	SELECT DISTINCT Customer.id
 	FROM Sales_Order
 	INNER JOIN Customer ON cust_id = Customer.id
-	-- WHERE DATE_PART('year', order_date) != '1993'
 	WHERE STRFTIME('%Y', order_date) != 1993
 );
 
