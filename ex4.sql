@@ -22,6 +22,10 @@ WHERE ct.id NOT IN (
 	FROM Sales_Order
 	INNER JOIN Customer ON cust_id = Customer.id
 	WHERE STRFTIME('%Y', order_date) != 1993
+) AND ct.id IN (
+    SELECT DISTINCT Customer.id
+    FROM Sales_Order
+    INNER JOIN Customer ON cust_id = Customer.id
 );
 
 -- Q4
@@ -45,7 +49,8 @@ FROM Sales_Order_Items
 NATURAL JOIN Sales_Order
 INNER JOIN Customer ON Customer.id = cust_id
 INNER JOIN Product ON Product.id = prod_id
-WHERE lname LIKE 'R%';
+WHERE lname LIKE 'R%'
+ORDER BY Product.name;
 
 -- Q7
 SELECT DISTINCT id, fname, lname
@@ -78,10 +83,8 @@ INNER JOIN Employee ON emp_id = sales_rep
 GROUP BY emp_id;
 
 -- Q11
-SELECT order_date AS latest_order_date
-FROM Sales_Order
-ORDER BY order_date DESC
-LIMIT 1;
+SELECT MAX(order_date) AS latest_order
+FROM Sales_Order;
 
 -- Q12
 SELECT state AS state_with_most_customers
@@ -117,8 +120,8 @@ WHERE cust_id = 129;
 
 -- Q15.1
 CREATE VIEW EmployeeAge AS
-    SELECT emp_id, dept_id, emp_fname, emp_lname, STRFTIME('%F', (DATE('now') - birth_date)) AS emp_age
-    FROM Employee;
+    SELECT emp.*, (DATE('now') - birth_date) AS emp_age
+    FROM Employee emp;
 
 -- Q15.2
 SELECT dept_id, dept_name, AVG(emp_age)
